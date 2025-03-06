@@ -10,3 +10,11 @@
              第二部分：有效载荷，携带一些自定义信息、默认信息等
              第三部分：签名，防止令牌被篡改，加入指定密钥
     拦截器：使所有的请求都经过拦截器，避免在接口中重复验证,注意登录和注册接口放行
+
+获取用户信息：
+    使用 @GetMapping 获取数据。
+    使用 @PostMapping 提交数据或创建资源。
+    在UserController类中创建UserInfo方法，获取token，并通过@RequestHeader获取请求头
+    使用
+        Map<String,Object> map =  JwtUtil.parseToken(token);
+    解析token，最后返回给Result类
