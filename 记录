@@ -18,3 +18,6 @@
     使用
         Map<String,Object> map =  JwtUtil.parseToken(token);
     解析token，最后返回给Result类
+    复用token解析信息
+        ThreadLocal：提供线程局部变量，存取数据是安全的，互不影响
+                     用完记得remove（）方法释放
