@@ -6,7 +6,9 @@ import com.itheima.service.UserService;
 import com.itheima.utils.JwtUtil;
 import com.itheima.utils.Md5Util;
 import com.itheima.utils.ThreadLocalUtil;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    //注册
     @PostMapping("/register")
     public Result register(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password) {
 
@@ -40,6 +43,8 @@ public class UserController {
             return Result.error("用户名已被占用");
         }
     }
+
+    //登录
     @PostMapping("/login")
     public  Result login(@Pattern(regexp = "^\\S{5,16}$") String username,@Pattern(regexp = "^\\S{5,16}$") String password) {
         //根据用户名查询用户
@@ -62,6 +67,8 @@ public class UserController {
         return  Result.error("密码错误");
 
     }
+
+    //获取用户信息
     @GetMapping("/userInfo")
     public Result<User> UserInfo(@RequestHeader(name = "Authorization") String token) {
         //根据用户名查询用户
@@ -72,4 +79,21 @@ public class UserController {
         User user = userService.findByUserName(username);
         return Result.success(user);
     }
+
+    //更新用户信息
+    @PutMapping("/update")
+    public Result update(@RequestBody @Validated User user) {
+        userService.update(user);//调用service层中的update方法
+        return Result.success();
+    }
+
+
+    //更新头像
+    @PatchMapping("/updateAvatar")
+    public Result updateAvatar(@RequestParam  @URL String avatarUrl) {
+        userService.updateAvatar(avatarUrl);
+        return Result.success();
+
+    }
+
 }

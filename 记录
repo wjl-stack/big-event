@@ -21,3 +21,12 @@
     复用token解析信息
         ThreadLocal：提供线程局部变量，存取数据是安全的，互不影响
                      用完记得remove（）方法释放
+
+更新用户信息：
+    请求信息是json对象，封装到user实体类对象中
+    @RequestBody能够将json对象自动转换成实体类对象
+    controller层中调用service层中的更新方法，mapper层中也要定义相关的sql语句
+    参数校验：
+        @NotNull限定当前的值不为null
+        @NotEmpty不为null且不为空
+        @Email满足邮箱格式
