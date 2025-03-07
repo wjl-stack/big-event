@@ -62,3 +62,9 @@
 获取文章分类详情：
     通过分类id查询文章分类详情
     定义findbyid方法以此写controller，service，mapper方法实现接口
+
+更新文章分类：
+    校验分组：当两个方法使用一个参数时，可能会导致校验条件冲突，需要使用@Validated提供的分组校验来解决
+        在pojo类中，定义两个接口Update，Add，然后在参数限制注解后写明该注解所生效的分组（通过@validated（value）属性赋值实现分组
+        若某个校验项没有指定分组，默认属于Default分组
+        分组之间可以继承，A extends B那么A拥有B中的所有校验项

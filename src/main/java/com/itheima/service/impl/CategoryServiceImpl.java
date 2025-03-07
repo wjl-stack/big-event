@@ -40,10 +40,19 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.list(userid);
     }
 
+    //获取文章分类信息
     @Override
     public Category findById(Integer id) {
         Category c = categoryMapper.findById(id);
 
         return c;
+    }
+
+    //更新文章分类信息
+    @Override
+    public void update(Category category) {
+        category.setUpdateTime(LocalDateTime.now());
+        categoryMapper.update(category);
+
     }
 }

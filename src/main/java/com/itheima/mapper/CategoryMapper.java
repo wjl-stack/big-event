@@ -5,6 +5,7 @@ import com.itheima.pojo.Category;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -18,7 +19,11 @@ public interface CategoryMapper {
     @Select("select * from category where create_user=#{userid}")
     List<Category> list(Integer userid);
 
-    //
+    //获取文章分类
     @Select("select * from category where id=#{id}")
     Category findById(Integer id);
+
+    //更新文章分类
+    @Update("update category set category_name=#{categoryName},category_alias=#{categoryAlias},update_time=#{updateTime} where id=#{id}")
+    void update(Category category);
 }
