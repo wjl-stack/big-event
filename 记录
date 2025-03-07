@@ -44,3 +44,12 @@
     请求参数不包含id，通过TreadLocal中存储的参数，定义一个map集合，调用get方法获得id
     最后通过密文方式更改密码
         userMapper.updatePwd(Md5Util.getMD5String(newPwd),id);
+
+添加文章分类：
+    在插入文章分类时，没有userid属性，只有creatuser，creatuser是外键，因此不能在mapper接口中定义add方法时直接传入，
+    需要在service实现类中定义一个map集合，调用get方法获得id，再使用 category.setCreateUser(userid)方法传入
+    参数校验：
+            @NotNull限定当前的值不为null
+            @NotEmpty不为null且不为空
+            @Email满足邮箱格式
+    并在controller实体类对象前加上@Validated注解 public Result add(@RequestBody @Validated Category category)

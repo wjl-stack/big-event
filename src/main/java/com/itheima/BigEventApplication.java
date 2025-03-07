@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-@MapperScan("com.itheima.mapper")
+//@MapperScan("com.itheima.mapper")
 public class BigEventApplication
 {
     public static void main( String[] args )
