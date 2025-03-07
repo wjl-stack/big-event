@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Service//将CategoryServiceImpl实现类对象交给ioc容器
@@ -29,5 +30,13 @@ public class CategoryServiceImpl implements CategoryService {
         Integer userid = (Integer) map.get("id");//调用get方法获取id
         category.setCreateUser(userid);
         categoryMapper.add(category);
+    }
+
+    //文章分类列表
+    @Override
+    public List<Category> list() {
+        Map<String,Object> map =  ThreadLocalUtil.get();//通过Treadlocal获取参数
+        Integer userid = (Integer) map.get("id");//调用get方法获取id
+        return categoryMapper.list(userid);
     }
 }

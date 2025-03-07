@@ -53,3 +53,8 @@
             @NotEmpty不为null且不为空
             @Email满足邮箱格式
     并在controller实体类对象前加上@Validated注解 public Result add(@RequestBody @Validated Category category)
+
+文章分类列表：
+    与添加文章分类一样使用/category进行访问，但区分方法是请求方式，上个是post请求，这个是get请求
+    controller层定义一个list集合对象来接收底层传来的数据
+    在实体类中通过@JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")来自定义参数输出格式
