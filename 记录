@@ -30,3 +30,17 @@
         @NotNull限定当前的值不为null
         @NotEmpty不为null且不为空
         @Email满足邮箱格式
+
+更新用户头像：
+    patch请求，使用@PatchMapper响应请求，使用@URL来确保用户输入的avatarUrl符合规范
+    在sql语句中使用now()获取系统当前时间
+    请求参数不包含id，通过TreadLocal中存储的参数，定义一个map集合，调用get方法获得id
+
+更新用户密码：
+    请求参数是oldpwd，newpwd等，与数据库中的参数不一致，因此需要定义map集合来接受参数
+    若原密码，新密码，repwd有一个为空，那么返回缺失必要的参数
+    调用userService根据用户名拿到原密码，在跟oldpwd比对
+    再根据校验原密码是否正确，两次输入的新密码是否一样，新密码是否和原密码一样判断是否调用修改方法
+    请求参数不包含id，通过TreadLocal中存储的参数，定义一个map集合，调用get方法获得id
+    最后通过密文方式更改密码
+        userMapper.updatePwd(Md5Util.getMD5String(newPwd),id);
