@@ -58,3 +58,7 @@
     与添加文章分类一样使用/category进行访问，但区分方法是请求方式，上个是post请求，这个是get请求
     controller层定义一个list集合对象来接收底层传来的数据
     在实体类中通过@JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")来自定义参数输出格式
+
+获取文章分类详情：
+    通过分类id查询文章分类详情
+    定义findbyid方法以此写controller，service，mapper方法实现接口

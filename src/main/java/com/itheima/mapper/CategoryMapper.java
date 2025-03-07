@@ -17,4 +17,8 @@ public interface CategoryMapper {
     //文章分类列表
     @Select("select * from category where create_user=#{userid}")
     List<Category> list(Integer userid);
+
+    //
+    @Select("select * from category where id=#{id}")
+    Category findById(Integer id);
 }

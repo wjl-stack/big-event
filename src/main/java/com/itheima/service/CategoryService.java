@@ -9,4 +9,6 @@ public interface CategoryService {
     void add(Category category);
     //文章分类列表
     List<Category> list();
+    //根据id查询分类
+    Category findById(Integer id);
 }
