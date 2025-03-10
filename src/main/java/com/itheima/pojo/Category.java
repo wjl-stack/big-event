@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Update;
 import java.time.LocalDateTime;
 @Data
 public class Category {
-    @NotNull(groups = Update.class)
+    @NotNull(groups = {Update.class,Delete.class})
     private Integer id;//主键ID
     @NotEmpty(groups = {Update.class,Add.class})
     private String categoryName;//分类名称
@@ -28,6 +28,9 @@ public class Category {
 
     }
     public  interface Update{
+
+    }
+    public interface Delete{
 
     }
 }

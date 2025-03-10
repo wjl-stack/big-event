@@ -6,6 +6,7 @@ import com.itheima.service.CategoryService;
 import com.itheima.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -54,5 +55,11 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdateTime(LocalDateTime.now());
         categoryMapper.update(category);
 
+    }
+
+    @Override
+    @Transactional // 确保删除操作在事务中执行
+    public void deleteById(Integer id) {
+        categoryMapper.deleteById(id);
     }
 }
