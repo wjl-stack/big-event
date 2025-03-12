@@ -2,6 +2,7 @@ package com.itheima.controller;
 
 
 import com.itheima.pojo.Article;
+import com.itheima.pojo.Category;
 import com.itheima.pojo.PageBean;
 import com.itheima.pojo.Result;
 import com.itheima.service.ArticleService;
@@ -39,4 +40,26 @@ public class ArticleController {
         PageBean<Article> pb =  articleService.list(pageNum,pageSize,categoryId,state);
         return Result.success(pb);
     }
+
+    //更新文章
+    @PutMapping
+    public Result update(@RequestBody @Validated(Article.Update.class) Article article) {
+        articleService.update(article);
+        return Result.success();
+    }
+
+    //获取文章详情
+    @GetMapping("/detail")
+    public  Result<Article> detail(Integer id) {
+        Article c = articleService.findById(id);
+        return Result.success(c);
+    }
+
+    //删除文章
+    @DeleteMapping
+    public Result delete(@RequestParam @Validated(Article.Delete.class) Integer id) {
+        articleService.deleteById(id);
+        return Result.success();
+    }
+
 }

@@ -4,11 +4,13 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.mapper.ArticleMapper;
 import com.itheima.pojo.Article;
+import com.itheima.pojo.Category;
 import com.itheima.pojo.PageBean;
 import com.itheima.service.ArticleService;
 import com.itheima.utils.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,5 +49,25 @@ public class ArticleServiceImpl implements ArticleService {
         pb.setTotal(p.getTotal());
         pb.setItems(p.getResult());
         return pb;
+    }
+    //更新文章
+    @Override
+    public void update(Article article) {
+        article.setUpdateTime(LocalDateTime.now());
+        articleMapper.update(article);
+    }
+    //获取文章详情
+    @Override
+    public Article findById(Integer id) {
+        Article a = articleMapper.findById(id);
+
+        return a;
+
+    }
+    //删除文章
+    @Override
+    @Transactional // 确保删除操作在事务中执行
+    public void deleteById(Integer id) {
+        articleMapper.deleteById(id);
     }
 }
