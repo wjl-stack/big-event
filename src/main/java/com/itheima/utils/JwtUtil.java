@@ -15,7 +15,7 @@ public class JwtUtil {
         //生成token，并return
         return JWT.create()
                 .withClaim("claims", claims)//添加载荷
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12))//过期时间
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))//过期时间
                 .sign(Algorithm.HMAC256(KEY));//指定算法，配置密钥
     }
 

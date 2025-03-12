@@ -10,12 +10,15 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -23,6 +26,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -62,6 +67,9 @@ public class UserController {
             claims.put("id",loginUser.getId());
             claims.put("username",loginUser.getUsername());
             String token = JwtUtil.genToken(claims);
+            //把token存储到redis中
+            ValueOperations<String,String> operations = stringRedisTemplate.opsForValue();
+            operations.set(token,token,1, TimeUnit.HOURS);
             return Result.success(token);
         }
 
@@ -99,7 +107,7 @@ public class UserController {
 
     //更新密码
     @PatchMapping("/updatePwd")
-    public Result updatePwd(@RequestBody Map<String,String> params) {
+    public Result updatePwd(@RequestBody Map<String,String> params,@RequestHeader("Authorization") String token) {
         //校验参数
         String oldPwd =  params.get("old_pwd");
         String newPwd =  params.get("new_pwd");
@@ -125,6 +133,9 @@ public class UserController {
         }
         //调用service完成密码更新
         userService.updatePwd(newPwd);
+        //删除对应的token
+        ValueOperations<String,String> operations = stringRedisTemplate.opsForValue();
+        operations.getOperations().delete(token);
         return Result.success();
     }
 
